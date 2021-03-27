@@ -75,7 +75,7 @@ endif
 #################################
 
 .PRECIOUS: $(DEP_FILES)
-.PHONY: release debug cppcheck valgrind clean folders ajuda executa
+.PHONY: release debug cppcheck valgrind limpa pastas ajuda executa
 
 ##### General rule
 all: $(EXEC)
@@ -85,14 +85,14 @@ $(EXEC): $(OBJ_FILES)
 	$(COMPILER) -o $@ $^ $(LINK_PATH) $(LIBS) $(FLAGS)
 
 ##### Generates object files
-$(BIN_PATH)/%.o: $(DEP_PATH)/%.d | folders
+$(BIN_PATH)/%.o: $(DEP_PATH)/%.d | pastas
 	$(COMPILER) $(INC_PATHS) $(addprefix $(SRC_PATH)/,$(notdir $(<:.d=.cpp))) -c $(FLAGS) -o $@
 
 ##### Generates dependency files
-$(DEP_PATH)/%.d: $(SRC_PATH)/%.cpp | folders
+$(DEP_PATH)/%.d: $(SRC_PATH)/%.cpp | pastas
 	$(COMPILER) $(INC_PATHS) $< $(DEP_FLAGS) $(FLAGS)
 
-clean:
+limpa:
 	-$(RMDIR) $(DEP_PATH)
 	-$(RMDIR) $(BIN_PATH)
 	-$(RM) $(EXEC)
@@ -114,7 +114,7 @@ release: $(EXEC)
 debug: FLAGS += $(DFLAGS)
 debug: $(EXEC)
 
-folders:
+pastas:
 ifeq ($(OS), Windows_NT)
 	@if NOT exist $(DEP_PATH) ( mkdir $(DEP_PATH) )
 	@if NOT exist $(BIN_PATH) ( mkdir $(BIN_PATH) )
