@@ -16,7 +16,7 @@ Pasta com todo o código do trabalho.
 
 #### makefile
 
-Contém vários comandos, mas só precisa de um na console ```make help``` para que as mostre.
+Contém vários comandos, mas só precisa de um na console ```make ajuda``` para que as mostre.
 
 #### lib, include e src
 
@@ -29,10 +29,10 @@ Organização que o makefile faz:
 
 ### Esse README.md
 
-Vamos sempre atualizar, se atentando ao formato markdown dele.
+Vamos sempre atualizar, se atentando ao formato markdown dele. Inclusive os espaços no final das linhas!!!
 
 ## Estilo
 
-O [VSCode](code.visualstudio.com) tem uma ótima integração com o [WSL2](ubuntu.com/wsl), por isso vou usar E RECOMENDO seu uso também.
-Nele vou estar usando [a extensão de C++ mais famosa lá](marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) e vou configurar para usar o estilo da Google, simples e puro.
+O [VSCode](code.visualstudio.com) tem uma ótima integração com o [WSL2](ubuntu.com/wsl), por isso vou usar E RECOMENDO seu uso também.  
+Nele vou estar usando [a extensão de C++ mais famosa lá](marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) e vou configurar para usar o estilo da Google, simples e puro.  
 Para documentação, vamos fazer em LaTeX no [overleaf](overleaf.com), e recomendo a gente explorar [esses templates da IEEE](http://www.ieee.org/conferences_events/conferences/publishing/templates.html).
