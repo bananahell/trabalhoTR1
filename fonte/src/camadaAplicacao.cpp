@@ -9,6 +9,11 @@ void AplicacaoTransmissora() {
 
 void CamadaDeAplicacaoTransmissora(string mensagem) {
   // int quadro [] = mensagem;
+  vector<int> quadro = TransformaStringEmASCII(mensagem);
+  CamadaFisicaTransmissora(quadro);
+}
+
+vector<int> TransformaStringEmASCII(string mensagem) {
   vector<int> quadro;
   for (unsigned i = 0; i < mensagem.size(); i++) {
     vector<int> tempQuadro;
@@ -25,11 +30,16 @@ void CamadaDeAplicacaoTransmissora(string mensagem) {
       quadro.push_back(tempQuadro.at(k));
     }
   }
-  CamadaFisicaTransmissora(quadro);
+  return quadro;
 }
 
 void CamadaDeAplicacaoReceptora(vector<int> quadro) {
   // string mensagem = quadro [];
+  string mensagem = TransformaASCIIEmString(quadro);
+  AplicacaoReceptora(mensagem);
+}
+
+string TransformaASCIIEmString(vector<int> quadro) {
   string mensagem = "";
   int intChar = 0;
   for (unsigned i = 0; i < quadro.size(); i++) {
@@ -41,8 +51,7 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro) {
     intChar += quadro.at(i);
   }
   mensagem.append(1, char(intChar));
-  intChar = 0;
-  AplicacaoReceptora(mensagem);
+  return mensagem;
 }
 
 void AplicacaoReceptora(string mensagem) {
