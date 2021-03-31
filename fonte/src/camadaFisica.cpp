@@ -1,8 +1,8 @@
 #include "camadaFisica.h"
 
-void CamadaFisicaTransmissora(int* quadro) {
+void CamadaFisicaTransmissora(vector<int> quadro) {
   int tipoDeCodificacao = 0;
-  int* fluxoBrutoDeBits;  // trabalhar com bits!!!!
+  vector<int> fluxoBrutoDeBits;  // trabalhar com bits!!!!
   switch (tipoDeCodificacao) {
     case CODIFICACAO_BINARIA:
       fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBinaria(quadro);
@@ -20,45 +20,59 @@ void CamadaFisicaTransmissora(int* quadro) {
   MeioDeComunicacao(fluxoBrutoDeBits);
 }
 
-void MeioDeComunicacao(int* fluxoBrutoDeBits) {
-  int* fluxoBrutoDeBitsPontoA;  // sempre usando bits, não bytes!!!!
-  int* fluxoBrutoDeBitsPontoB;
+void MeioDeComunicacao(vector<int> fluxoBrutoDeBits) {
+  vector<int> fluxoBrutoDeBitsPontoA;  // sempre usando bits, não bytes!!!!
+  vector<int> fluxoBrutoDeBitsPontoB;
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
-  while (fluxoBrutoDeBitsPontoB.length != fluxoBrutoDeBitsPontoA) {
-    fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA;  // bits, não bytes!!!!
+  for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
+    fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
   }
   CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
-void CamadaFisicaReceptora(int* quadro) {
+void CamadaFisicaReceptora(vector<int> fluxoBrutoDeBits) {
   int tipoDeDecodificacao = 0;
-  int* fluxoBrutoDeBits;  // biiiiiits!!!!
-  string mensagem = "teste";
+  vector<int> quadro;  // biiiiiits!!!!
   switch (tipoDeDecodificacao) {
     case CODIFICACAO_BINARIA:
-      fluxoBrutoDeBits = CamadaFisicaReceptoraCodificacaoBinaria(quadro);
+      quadro = CamadaFisicaReceptoraCodificacaoBinaria(fluxoBrutoDeBits);
       break;
     case CODIFICACAO_MANCHESTER:
-      fluxoBrutoDeBits = CamadaFisicaReceptoraCodificacaoManchester(quadro);
+      quadro = CamadaFisicaReceptoraCodificacaoManchester(fluxoBrutoDeBits);
       break;
     case CODIFICACAO_BIPOLAR:
-      fluxoBrutoDeBits = CamadaFisicaReceptoraCodificacaoBipolar(quadro);
+      quadro = CamadaFisicaReceptoraCodificacaoBipolar(fluxoBrutoDeBits);
       break;
     default:
       cout << "Tipo de decodificação não reconhecido..." << endl;
       break;
   }
-  CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+  CamadaDeAplicacaoReceptora(quadro);
 }
 
-int* CamadaFisicaTransmissoraCodificacaoBinaria(int* quadro) {}
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {
+  /*
+  TODO
+  Isso tá COMPLETAMENTE ERRADO.... só to colocando pra fazer alguma coisa rodar!
+  */
+  return quadro;
+}
 
-int* CamadaFisicaTransmissoraCodificacaoManchester(int* quadro) {}
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {}
 
-int* CamadaFisicaTransmissoraCodificacaoBipolar(int* quadro) {}
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro) {}
 
-int* CamadaFisicaReceptoraCodificacaoBinaria(int* quadro) {}
+vector<int> CamadaFisicaReceptoraCodificacaoBinaria(
+    vector<int> fluxoBrutoDeBits) {
+  /*
+  TODO
+  Isso tá COMPLETAMENTE ERRADO.... só to colocando pra fazer alguma coisa rodar!
+  */
+  return fluxoBrutoDeBits;
+}
 
-int* CamadaFisicaReceptoraCodificacaoManchester(int* quadro) {}
+vector<int> CamadaFisicaReceptoraCodificacaoManchester(
+    vector<int> fluxoBrutoDeBits) {}
 
-int* CamadaFisicaReceptoraCodificacaoBipolar(int* quadro) {}
+vector<int> CamadaFisicaReceptoraCodificacaoBipolar(
+    vector<int> fluxoBrutoDeBits) {}

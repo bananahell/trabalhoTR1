@@ -1,5 +1,7 @@
 #include "camadaFisica.h"
 
+const int ASCII_MAX_BITS = 8;
+
 /**
  * Entrada na camada de aplicação para transmissão.
  */
@@ -13,5 +15,6 @@ void CamadaDeAplicacaoTransmissora(string);
 
 /**
  * Entrada na camada de aplicação para recepção.
+ * @param mensagem String resultado da decodificação.
  */
-void AplicacaoReceptora();
+void AplicacaoReceptora(string);
