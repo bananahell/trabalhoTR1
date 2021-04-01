@@ -13,7 +13,7 @@ void AplicacaoTransmissora();
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaDeAplicacaoTransmissora(string, int);
+void CamadaDeAplicacaoTransmissora(const string&, int);
 
 /**
  * Recebe string e retorna um vetor de inteiros dos valores binários em ASCII de
@@ -34,4 +34,4 @@ string TransformaASCIIEmString(vector<int>);
  * Entrada na camada de aplicação para recepção.
  * @param mensagem String resultado da decodificação.
  */
-void AplicacaoReceptora(string);
+void AplicacaoReceptora(const string&);

@@ -1,6 +1,7 @@
 #include "camadaFisica.h"
 
-void CamadaFisicaTransmissora(vector<int> quadro, int codificacaoFisica) {
+void CamadaFisicaTransmissora(const vector<int>& quadro,
+                              int codificacaoFisica) {
   vector<int> fluxoBrutoDeBits;  // trabalhar com bits!!!!
   switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
@@ -19,7 +20,8 @@ void CamadaFisicaTransmissora(vector<int> quadro, int codificacaoFisica) {
   MeioDeComunicacao(fluxoBrutoDeBits, codificacaoFisica);
 }
 
-void MeioDeComunicacao(vector<int> fluxoBrutoDeBits, int codificacaoFisica) {
+void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits,
+                       int codificacaoFisica) {
   vector<int> fluxoBrutoDeBitsPontoA;  // sempre usando bits, não bytes!!!!
   vector<int> fluxoBrutoDeBitsPontoB;
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
@@ -29,7 +31,7 @@ void MeioDeComunicacao(vector<int> fluxoBrutoDeBits, int codificacaoFisica) {
   CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, codificacaoFisica);
 }
 
-void CamadaFisicaReceptora(vector<int> fluxoBrutoDeBits,
+void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
                            int codificacaoFisica) {
   vector<int> quadro;  // biiiiiits!!!!
   switch (codificacaoFisica) {

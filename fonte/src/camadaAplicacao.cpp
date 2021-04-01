@@ -13,7 +13,8 @@ void AplicacaoTransmissora() {
   CamadaDeAplicacaoTransmissora(mensagem, codificacaoFisica);
 }
 
-void CamadaDeAplicacaoTransmissora(string mensagem, int codificacaoFisica) {
+void CamadaDeAplicacaoTransmissora(const string& mensagem,
+                                   int codificacaoFisica) {
   // int quadro [] = mensagem;
   vector<int> quadro = TransformaStringEmASCII(mensagem);
   CamadaFisicaTransmissora(quadro, codificacaoFisica);
@@ -39,7 +40,7 @@ vector<int> TransformaStringEmASCII(string mensagem) {
   return quadro;
 }
 
-void CamadaDeAplicacaoReceptora(vector<int> quadro) {
+void CamadaDeAplicacaoReceptora(const vector<int>& quadro) {
   // string mensagem = quadro [];
   string mensagem = TransformaASCIIEmString(quadro);
   AplicacaoReceptora(mensagem);
@@ -60,6 +61,6 @@ string TransformaASCIIEmString(vector<int> quadro) {
   return mensagem;
 }
 
-void AplicacaoReceptora(string mensagem) {
+void AplicacaoReceptora(const string& mensagem) {
   cout << "A mensagem recebida foi: " << mensagem << endl;
 }

@@ -15,7 +15,7 @@ const vector<int> CLOCK_MANCHESTER{0, 1};
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaTransmissora(vector<int>, int);
+void CamadaFisicaTransmissora(const vector<int>&, int);
 
 /**
  * "Simulação" do meio de comunicação, transmitindo os bits.
@@ -23,7 +23,7 @@ void CamadaFisicaTransmissora(vector<int>, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void MeioDeComunicacao(vector<int>, int);
+void MeioDeComunicacao(const vector<int>&, int);
 
 /**
  * Entrada na camada física para recepção.
@@ -31,7 +31,7 @@ void MeioDeComunicacao(vector<int>, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaReceptora(vector<int>, int);
+void CamadaFisicaReceptora(const vector<int>&, int);
 
 /**
  * Ou conhecida como NRZ, simplesmente replica a sequência de bits recebida.
@@ -79,4 +79,4 @@ vector<int> CamadaFisicaReceptoraCodificacaoBipolar(vector<int>);
  * Entrada na camada de aplicação para recepção.
  * @param quadro Sequência de bits a ser decodificada pela camada de aplicação.
  */
-void CamadaDeAplicacaoReceptora(vector<int>);
+void CamadaDeAplicacaoReceptora(const vector<int>&);
