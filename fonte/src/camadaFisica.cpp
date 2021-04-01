@@ -1,9 +1,8 @@
 #include "camadaFisica.h"
 
-void CamadaFisicaTransmissora(vector<int> quadro) {
-  int tipoDeCodificacao = 0;
+void CamadaFisicaTransmissora(vector<int> quadro, int codificacaoFisica) {
   vector<int> fluxoBrutoDeBits;  // trabalhar com bits!!!!
-  switch (tipoDeCodificacao) {
+  switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
       fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBinaria(quadro);
       break;
@@ -17,23 +16,23 @@ void CamadaFisicaTransmissora(vector<int> quadro) {
       cout << "Tipo de codificação não reconhecido..." << endl;
       break;
   }
-  MeioDeComunicacao(fluxoBrutoDeBits);
+  MeioDeComunicacao(fluxoBrutoDeBits, codificacaoFisica);
 }
 
-void MeioDeComunicacao(vector<int> fluxoBrutoDeBits) {
+void MeioDeComunicacao(vector<int> fluxoBrutoDeBits, int codificacaoFisica) {
   vector<int> fluxoBrutoDeBitsPontoA;  // sempre usando bits, não bytes!!!!
   vector<int> fluxoBrutoDeBitsPontoB;
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
   for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
     fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
   }
-  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
+  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, codificacaoFisica);
 }
 
-void CamadaFisicaReceptora(vector<int> fluxoBrutoDeBits) {
-  int tipoDeDecodificacao = 0;
+void CamadaFisicaReceptora(vector<int> fluxoBrutoDeBits,
+                           int codificacaoFisica) {
   vector<int> quadro;  // biiiiiits!!!!
-  switch (tipoDeDecodificacao) {
+  switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
       quadro = CamadaFisicaReceptoraCodificacaoBinaria(fluxoBrutoDeBits);
       break;
@@ -51,28 +50,49 @@ void CamadaFisicaReceptora(vector<int> fluxoBrutoDeBits) {
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {
-  /*
-  TODO
-  Isso tá COMPLETAMENTE ERRADO.... só to colocando pra fazer alguma coisa rodar!
-  */
   return quadro;
 }
 
-vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {}
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {
+  vector<int> manchesterBits;
+  for (unsigned i = 0; i < quadro.size(); i++) {
+    manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(0));
+    manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(1));
+  }
+  return manchesterBits;
+}
 
-vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro) {}
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro) {
+  int unsAchados = 0;
+  for (unsigned i = 0; i < quadro.size(); i++) {
+    if (quadro.at(i) == 1) {
+      if (unsAchados % 2 == 1) {
+        quadro.at(i) = -1;
+      }
+      unsAchados++;
+    }
+  }
+  return quadro;
+}
 
 vector<int> CamadaFisicaReceptoraCodificacaoBinaria(
     vector<int> fluxoBrutoDeBits) {
-  /*
-  TODO
-  Isso tá COMPLETAMENTE ERRADO.... só to colocando pra fazer alguma coisa rodar!
-  */
   return fluxoBrutoDeBits;
 }
 
 vector<int> CamadaFisicaReceptoraCodificacaoManchester(
-    vector<int> fluxoBrutoDeBits) {}
+    vector<int> fluxoBrutoDeBits) {
+  vector<int> bitsDecodificados;
+  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i += 2) {
+    bitsDecodificados.push_back(fluxoBrutoDeBits.at(i));
+  }
+  return bitsDecodificados;
+}
 
 vector<int> CamadaFisicaReceptoraCodificacaoBipolar(
-    vector<int> fluxoBrutoDeBits) {}
+    vector<int> fluxoBrutoDeBits) {
+  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i++) {
+    fluxoBrutoDeBits.at(i) = fabs(fluxoBrutoDeBits.at(i));
+  }
+  return fluxoBrutoDeBits;
+}

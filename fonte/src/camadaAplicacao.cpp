@@ -2,15 +2,21 @@
 
 void AplicacaoTransmissora() {
   string mensagem;
+  int codificacaoFisica = 0;
   cout << "Digite uma mensagem: " << endl;
-  cin >> mensagem;
-  CamadaDeAplicacaoTransmissora(mensagem);
+  getline(cin, mensagem);
+  cout << "Selecione um modo de codificação:" << endl
+       << "0: Codificação Binária" << endl
+       << "1: Codificação Manchester" << endl
+       << "2: Codificação Bipolar" << endl;
+  cin >> codificacaoFisica;
+  CamadaDeAplicacaoTransmissora(mensagem, codificacaoFisica);
 }
 
-void CamadaDeAplicacaoTransmissora(string mensagem) {
+void CamadaDeAplicacaoTransmissora(string mensagem, int codificacaoFisica) {
   // int quadro [] = mensagem;
   vector<int> quadro = TransformaStringEmASCII(mensagem);
-  CamadaFisicaTransmissora(quadro);
+  CamadaFisicaTransmissora(quadro, codificacaoFisica);
 }
 
 vector<int> TransformaStringEmASCII(string mensagem) {

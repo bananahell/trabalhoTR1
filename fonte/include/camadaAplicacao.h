@@ -10,8 +10,10 @@ void AplicacaoTransmissora();
 /**
  * Parte da camada de aplicação que transmite dados chamando a camada física.
  * @param mensagem Mensagem que vai ser codificada na camada física.
+ * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
+ * Manchester.
  */
-void CamadaDeAplicacaoTransmissora(string);
+void CamadaDeAplicacaoTransmissora(string, int);
 
 /**
  * Recebe string e retorna um vetor de inteiros dos valores binários em ASCII de
