@@ -4,7 +4,7 @@ Trabalho da matéria de Teleinformática e Redes
 14/0065032 - Pedro Nogueira
 UnB - 2020/2
 
-## Specs
+## Especificações
 
 ### PDF's
 
