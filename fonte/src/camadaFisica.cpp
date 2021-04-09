@@ -2,7 +2,7 @@
 
 void CamadaFisicaTransmissora(const vector<int>& quadro,
                               int codificacaoFisica) {
-  vector<int> fluxoBrutoDeBits;  // trabalhar com bits!!!!
+  vector<int> fluxoBrutoDeBits;
   switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
       fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBinaria(quadro);
@@ -22,7 +22,7 @@ void CamadaFisicaTransmissora(const vector<int>& quadro,
 
 void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits,
                        int codificacaoFisica) {
-  vector<int> fluxoBrutoDeBitsPontoA;  // sempre usando bits, não bytes!!!!
+  vector<int> fluxoBrutoDeBitsPontoA;
   vector<int> fluxoBrutoDeBitsPontoB;
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
   for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
@@ -33,7 +33,7 @@ void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits,
 
 void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
                            int codificacaoFisica) {
-  vector<int> quadro;  // biiiiiits!!!!
+  vector<int> quadro;
   switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
       quadro = CamadaFisicaReceptoraCodificacaoBinaria(fluxoBrutoDeBits);
@@ -52,28 +52,55 @@ void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {
+  cout << endl << "Codificação Binária:";
+  for (unsigned i = 0; i < quadro.size(); i++) {
+    if (i % 8 == 0) {
+      cout << endl;
+    }
+    cout << quadro.at(i);
+  }
+  cout << endl;
   return quadro;
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {
   vector<int> manchesterBits;
+  cout << endl << "Codificação Manchester:";
   for (unsigned i = 0; i < quadro.size(); i++) {
     manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(0));
     manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(1));
-  }
+    if (i % 8 == 0) {
+      cout << endl;
+    }
+    cout << (quadro.at(i) ^ CLOCK_MANCHESTER.at(0));
+    cout << (quadro.at(i) ^ CLOCK_MANCHESTER.at(1));
+  }  // CLOCK_MANCHESTER = [0,1] e só existe para padronizar a codificação
+  cout << endl;
   return manchesterBits;
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro) {
-  int unsAchados = 0;
+  bool umNegativo = false;
+  cout << endl << "Codificação Bipolar:";
   for (unsigned i = 0; i < quadro.size(); i++) {
-    if (quadro.at(i) == 1) {
-      if (unsAchados % 2 == 1) {
-        quadro.at(i) = -1;
-      }
-      unsAchados++;
+    if (i % 8 == 0) {
+      umNegativo = false;
+      cout << endl;
     }
+    if (quadro.at(i) == 1) {
+      if (umNegativo) {
+        quadro.at(i) = -1;
+        cout << "-1";
+      } else {
+        cout << " 1";
+      }
+      umNegativo = !umNegativo;
+    } else {
+      cout << " 0";
+    }
+    cout << " ";
   }
+  cout << endl;
   return quadro;
 }
 
@@ -85,16 +112,16 @@ vector<int> CamadaFisicaReceptoraCodificacaoBinaria(
 vector<int> CamadaFisicaReceptoraCodificacaoManchester(
     vector<int> fluxoBrutoDeBits) {
   vector<int> bitsDecodificados;
-  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i += 2) {
-    bitsDecodificados.push_back(fluxoBrutoDeBits.at(i));
+  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i += 2) {  // Sinal original
+    bitsDecodificados.push_back(fluxoBrutoDeBits.at(i));  // está na xor com 0
   }
   return bitsDecodificados;
 }
 
 vector<int> CamadaFisicaReceptoraCodificacaoBipolar(
     vector<int> fluxoBrutoDeBits) {
-  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i++) {
-    fluxoBrutoDeBits.at(i) = fabs(fluxoBrutoDeBits.at(i));
+  for (unsigned i = 0; i < fluxoBrutoDeBits.size(); i++) {  // Só faz módulo
+    fluxoBrutoDeBits.at(i) = fabs(fluxoBrutoDeBits.at(i));  // de tudo
   }
   return fluxoBrutoDeBits;
 }
