@@ -54,7 +54,7 @@ void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {
   cout << endl << "Codificação Binária:";
   for (unsigned i = 0; i < quadro.size(); i++) {
-    if (i % 8 == 0) {
+    if (i % 8 == 0) {  // Para cada caracter (que tem 8 bits cada)...
       cout << endl;
     }
     cout << quadro.at(i);
@@ -69,7 +69,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {
   for (unsigned i = 0; i < quadro.size(); i++) {
     manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(0));
     manchesterBits.push_back(quadro.at(i) ^ CLOCK_MANCHESTER.at(1));
-    if (i % 8 == 0) {
+    if (i % 8 == 0) {  // Para cada caracter (que tem 8 bits cada)...
       cout << endl;
     }
     cout << (quadro.at(i) ^ CLOCK_MANCHESTER.at(0));
@@ -80,11 +80,10 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int> quadro) {
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int> quadro) {
-  bool umNegativo = false;
+  bool umNegativo = false;  // Meu bipolar começa com 1 positivo
   cout << endl << "Codificação Bipolar:";
   for (unsigned i = 0; i < quadro.size(); i++) {
-    if (i % 8 == 0) {
-      umNegativo = false;
+    if (i % 8 == 0) {  // Para cada caracter (que tem 8 bits cada)...
       cout << endl;
     }
     if (quadro.at(i) == 1) {
