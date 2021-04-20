@@ -4,6 +4,7 @@
 
 using namespace std;
 
+const int ASCII_MAX_BITS = 8;
 const int CODIFICACAO_BINARIA = 0;
 const int CODIFICACAO_MANCHESTER = 1;
 const int CODIFICACAO_BIPOLAR = 2;
@@ -15,7 +16,7 @@ const vector<int> CLOCK_MANCHESTER{0, 1};
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaTransmissora(const vector<int>&, int);
+void CamadaFisicaTransmissora(const vector<int>&, int, int);
 
 /**
  * "Simulação" do meio de comunicação, transmitindo os bits.
@@ -23,7 +24,7 @@ void CamadaFisicaTransmissora(const vector<int>&, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void MeioDeComunicacao(const vector<int>&, int);
+void MeioDeComunicacao(const vector<int>&, int, int);
 
 /**
  * Entrada na camada física para recepção.
@@ -31,7 +32,7 @@ void MeioDeComunicacao(const vector<int>&, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaReceptora(const vector<int>&, int);
+void CamadaFisicaReceptora(const vector<int>&, int, int);
 
 /**
  * Ou conhecida como NRZ, simplesmente replica a sequência de bits recebida.
@@ -79,4 +80,16 @@ vector<int> CamadaFisicaReceptoraCodificacaoBipolar(vector<int>);
  * Entrada na camada de aplicação para recepção.
  * @param quadro Sequência de bits a ser decodificada pela camada de aplicação.
  */
-void CamadaDeAplicacaoReceptora(const vector<int>&);
+//void CamadaDeAplicacaoReceptora(const vector<int>&);
+
+/**
+ * Entrada na camada de enlace para recepção.
+ * @param quadro Bits que vão viajar pelos sinais via cabo ou onda.
+ * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre 
+ * Contagem de Caracteres ou Inserção de Bytes.
+ */
+void CamadaEnlaceReceptora (const vector<int>& , int);
+
+vector<int> TransformaASCIIEmBits(vector<int>);
+
+vector<int> TransformaBitsEmASCII(vector<int>);
