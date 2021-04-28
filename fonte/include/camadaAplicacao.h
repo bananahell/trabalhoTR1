@@ -42,9 +42,10 @@ void AplicacaoReceptora(const string&);
 
 /**
  * Entrada na camada de enlace para transmissão.
- * São realizados o Enquadramento, o Controle de Erros, e o envio à Camada Física.
+ * São realizados o Enquadramento, o Controle de Erros, e o envio à Camada
+ * Física.
  * @param quadro Bits que vão viajar pelos sinais via cabo ou onda.
- * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre 
+ * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceTransmissora (const vector<int>& , int, int);
+void CamadaEnlaceTransmissora(const vector<int>&, int, int);

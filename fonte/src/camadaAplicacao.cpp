@@ -17,13 +17,15 @@ void AplicacaoTransmissora() {
        << "0: Contagem de Caracteres" << endl
        << "1: Inserção de Bytes" << endl;
   cin >> tipoDeEnquadramento;
-  CamadaDeAplicacaoTransmissora(mensagem, codificacaoFisica, tipoDeEnquadramento);
+  CamadaDeAplicacaoTransmissora(mensagem, codificacaoFisica,
+                                tipoDeEnquadramento);
 }
 
 void CamadaDeAplicacaoTransmissora(const string& mensagem,
-                                   int codificacaoFisica, int tipoDeEnquadramento) {
+                                   int codificacaoFisica,
+                                   int tipoDeEnquadramento) {
   vector<int> quadro = TransformaStringEmASCII(mensagem);
-  //CamadaFisicaTransmissora(quadro, codificacaoFisica);
+  // CamadaFisicaTransmissora(quadro, codificacaoFisica);
   CamadaEnlaceTransmissora(quadro, codificacaoFisica, tipoDeEnquadramento);
 }
 
