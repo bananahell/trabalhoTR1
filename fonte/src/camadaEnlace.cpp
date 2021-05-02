@@ -68,7 +68,35 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
     const vector<int>& quadro) {
-  vector<int> quadroEnquadrado = quadro;
+  //vector<int> quadroEnquadrado = quadro;
+  vector<int> quadroEnquadrado;
+  int i = 0;
+  int j = 0;
+  int tamanho = quadro.size();
+  srand(time(0));
+  int max_enquadro = 5;
+  int min_enquadro = 2;
+  int bytes_enquadro = (rand() % max_enquadro) + min_enquadro; // quantidade de bytes por quadro
+  quadroEnquadrado.push_back(FLAG);
+  while (i < tamanho) {
+    if (quadro.at(i) == FLAG) {
+      quadroEnquadrado.push_back(ESC);
+    }
+    quadroEnquadrado.push_back(quadro.at(i));
+    i++;
+    j++;
+    if (i == tamanho) {
+      quadroEnquadrado.push_back(FLAG);
+    }
+    else {
+      if (j == bytes_enquadro) {
+        j = 0;
+        bytes_enquadro = (rand() % max_enquadro) + min_enquadro;
+        quadroEnquadrado.push_back(FLAG);
+        quadroEnquadrado.push_back(FLAG);
+      }
+    }
+  }
   return quadroEnquadrado;
 }
 
@@ -125,7 +153,27 @@ vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
 
 vector<int> CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(
     const vector<int>& quadroEnquadrado) {
-  vector<int> quadro = quadroEnquadrado;
+  //vector<int> quadro = quadroEnquadrado;
+  vector<int> quadro;
+  int tamanho = quadroEnquadrado.size();
+  int i = 0;
+  int escape = 0;
+  while (i < tamanho) {
+    if (quadroEnquadrado.at(i) == ESC) {
+      escape = 1;
+    }
+    else if (quadroEnquadrado.at(i) == FLAG) {
+      if (escape == 1) {
+        quadro.push_back(quadroEnquadrado.at(i));
+        escape = 0;
+      }
+    }
+    else {
+      quadro.push_back(quadroEnquadrado.at(i));
+    }
+    i++;
+  }
+  
   return quadro;
 }
 

@@ -4,7 +4,8 @@ const int CONTAGEM_DE_CHAR = 0;
 const int INSERCAO_DE_BYTE = 1;
 
 const int CONTAGEM_HEADER = 4;
-const int FLAG_INSERCAO = int('~');
+const int FLAG = 0x0F;
+const int ESC = int('~');
 
 /**
  * Entrada na camada de enlace para transmissão.
