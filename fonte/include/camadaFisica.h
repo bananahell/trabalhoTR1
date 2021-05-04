@@ -1,7 +1,7 @@
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <vector>
-#include <cstdlib>
 
 using namespace std;
 
@@ -41,6 +41,7 @@ void CamadaFisicaReceptora(const vector<int>&, int, int);
  * @return Bits prestees a serem enviados ao meio de comunicação.
  */
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int>);
+
 /**
  * Faz a codificação Manchester do sinal, aplicando uma XOR no sinal com um
  * clock de frequência igual ao tempo dos bits.
@@ -48,6 +49,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int>);
  * @return Bits prestees a serem enviados ao meio de comunicação.
  */
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester(vector<int>);
+
 /**
  * Faz a codificação Bipolar do sinal, mantendo os 0's e alternando os 1's de 1
  * para -1.
@@ -62,6 +64,7 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBipolar(vector<int>);
  * @return A sequência de bits decodificada.
  */
 vector<int> CamadaFisicaReceptoraCodificacaoBinaria(vector<int>);
+
 /**
  * Faz a decodificação Manchester do sinal, aplicando uma XOR no sinal com um
  * clock de frequência igual ao tempo dos bits.
@@ -69,6 +72,7 @@ vector<int> CamadaFisicaReceptoraCodificacaoBinaria(vector<int>);
  * @return A sequência de bits decodificada.
  */
 vector<int> CamadaFisicaReceptoraCodificacaoManchester(vector<int>);
+
 /**
  * Faz a decodificação Bipolar do sinal, mantendo os 0's e alternando os 1's de
  * 1 para -1.
@@ -78,18 +82,12 @@ vector<int> CamadaFisicaReceptoraCodificacaoManchester(vector<int>);
 vector<int> CamadaFisicaReceptoraCodificacaoBipolar(vector<int>);
 
 /**
- * Entrada na camada de aplicação para recepção.
- * @param quadro Sequência de bits a ser decodificada pela camada de aplicação.
- */
-//void CamadaDeAplicacaoReceptora(const vector<int>&);
-
-/**
  * Entrada na camada de enlace para recepção.
  * @param quadro Bits que vão viajar pelos sinais via cabo ou onda.
- * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre 
+ * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceReceptora (const vector<int>& , int);
+void CamadaEnlaceReceptora(const vector<int>&, int);
 
 vector<int> TransformaASCIIEmBits(vector<int>);
 

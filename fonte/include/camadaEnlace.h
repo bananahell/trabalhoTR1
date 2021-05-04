@@ -39,7 +39,6 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
 vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
     const vector<int>&);
 
-/* Próxima etapa do trabalho */
 void CamadaEnlaceTransmissoraControleDeErro(const vector<int>&);
 
 /**
@@ -57,7 +56,6 @@ vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(vector<int>);
 vector<int> CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(
     const vector<int>&);
 
-/* Próxima etapa do trabalho */
 void CamadaEnlaceReceptoraControleDeErro(const vector<int>&);
 
 /**
