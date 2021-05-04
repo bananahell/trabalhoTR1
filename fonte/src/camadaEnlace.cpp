@@ -30,7 +30,6 @@ vector<int> CamadaEnlaceTransmissoraEnquadramento(const vector<int>& quadro,
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
     vector<int> quadro) {
-  // vector<int> quadroEnquadrado = quadro;
   vector<int> quadroEnquadrado;
   int tamanho = quadro.size();
   unsigned int i = 0;
@@ -41,12 +40,15 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
   } else if (tamanho != 0) {
     header = tamanho + 1;
   }
+  cout << endl << "Enquadramento por contagem de caracteres:";
   while (tamanho > 0) {
     if (i == 0) {
       quadroEnquadrado.push_back(header);
+      cout << endl << header << " - ";
       i++;
     } else {
       quadroEnquadrado.push_back(quadro.at(j));
+      cout << quadro.at(j) << " ";
       i++;
       j++;
       tamanho--;
@@ -58,17 +60,12 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
       }
     }
   }
-  cout << endl << "Enquadramento por contagem de caracteres:" << endl;
-  for (i = 0; i < quadroEnquadrado.size(); i++) {
-    cout << quadroEnquadrado.at(i) << " ";
-  }
   cout << endl;
   return quadroEnquadrado;
 }
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
     const vector<int>& quadro) {
-  //vector<int> quadroEnquadrado = quadro;
   vector<int> quadroEnquadrado;
   int i = 0;
   int j = 0;
@@ -76,23 +73,38 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
   srand(time(0));
   int max_enquadro = 5;
   int min_enquadro = 2;
-  int bytes_enquadro = (rand() % max_enquadro) + min_enquadro; // quantidade de bytes por quadro
+  int bytes_enquadro =
+      (rand() % max_enquadro) + min_enquadro;  // quantidade de bytes por quadro
   quadroEnquadrado.push_back(FLAG);
+  cout << endl
+       << "Enquadramento por inserção de bytes." << endl
+       << "Cada pedaço terá um tamanho aleatório entre 2 e 5 caracteres e será"
+       << endl
+       << "    impresso em uma linha." << endl
+       << char(FLAG) << " e " << char(ESC)
+       << " foram escolhidos como caracteres especiais nesse protocolo, então "
+       << "será" << endl
+       << "    impresso uma \\ atrás de cada " << char(FLAG) << " e "
+       << char(ESC) << " na mensagem):" << endl
+       << endl;
   while (i < tamanho) {
-    if (quadro.at(i) == FLAG) {
+    if (quadro.at(i) == FLAG || quadro.at(i) == ESC) {
+      cout << "\\";
       quadroEnquadrado.push_back(ESC);
     }
     quadroEnquadrado.push_back(quadro.at(i));
+    cout << char(quadro.at(i));
     i++;
     j++;
     if (i == tamanho) {
       quadroEnquadrado.push_back(FLAG);
-    }
-    else {
+      cout << endl;
+    } else {
       if (j == bytes_enquadro) {
         j = 0;
         bytes_enquadro = (rand() % max_enquadro) + min_enquadro;
         quadroEnquadrado.push_back(FLAG);
+        cout << endl;
         quadroEnquadrado.push_back(FLAG);
       }
     }
@@ -100,7 +112,6 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
   return quadroEnquadrado;
 }
 
-/* Próxima etapa do trabalho */
 void CamadaEnlaceTransmissoraControleDeErro(const vector<int>& quadro) {}
 
 void CamadaEnlaceReceptora(const vector<int>& quadroEnquadrado,
@@ -113,7 +124,6 @@ void CamadaEnlaceReceptora(const vector<int>& quadroEnquadrado,
 
 vector<int> CamadaEnlaceReceptoraEnquadramento(
     const vector<int>& quadroEnquadrado, int tipoDeEnquadramento) {
-  // int tipoDeEnquadramento = 0;
   vector<int> quadro;
 
   switch (tipoDeEnquadramento) {
@@ -134,7 +144,6 @@ vector<int> CamadaEnlaceReceptoraEnquadramento(
 
 vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
     vector<int> quadroEnquadrado) {
-  // vector<int> quadro = quadroEnquadrado;
   vector<int> quadro;
   unsigned int i = 0;
   while (i < quadroEnquadrado.size()) {
@@ -153,29 +162,30 @@ vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
 
 vector<int> CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(
     const vector<int>& quadroEnquadrado) {
-  //vector<int> quadro = quadroEnquadrado;
   vector<int> quadro;
   int tamanho = quadroEnquadrado.size();
   int i = 0;
-  int escape = 0;
+  bool escape = false;
   while (i < tamanho) {
-    if (quadroEnquadrado.at(i) == ESC) {
-      escape = 1;
-    }
-    else if (quadroEnquadrado.at(i) == FLAG) {
-      if (escape == 1) {
+    if (quadroEnquadrado.at(i) == FLAG) {
+      if (escape) {
         quadro.push_back(quadroEnquadrado.at(i));
-        escape = 0;
+        escape = false;
       }
-    }
-    else {
+    } else if (quadroEnquadrado.at(i) == ESC) {
+      if (escape) {
+        quadro.push_back(quadroEnquadrado.at(i));
+        escape = false;
+      } else {
+        escape = true;
+      }
+    } else {
       quadro.push_back(quadroEnquadrado.at(i));
     }
     i++;
   }
-  
+
   return quadro;
 }
 
-/* Próxima etapa do trabalho */
 void CamadaEnlaceReceptoraControleDeErro(const vector<int>& quadro) {}

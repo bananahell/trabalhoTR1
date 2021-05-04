@@ -4,8 +4,8 @@ const int CONTAGEM_DE_CHAR = 0;
 const int INSERCAO_DE_BYTE = 1;
 
 const int CONTAGEM_HEADER = 4;
-const int FLAG = 0x0F;
-const int ESC = int('~');
+const int FLAG = int('a');  // Usamos caracteres muito usados para
+const int ESC = int('b');   // testar se o programa funciona bem
 
 /**
  * Entrada na camada de enlace para transmissão.

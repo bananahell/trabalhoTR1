@@ -1,7 +1,7 @@
 #include "camadaFisica.h"
 
-void CamadaFisicaTransmissora(const vector<int>& quadro,
-                              int codificacaoFisica, int tipoDeEnquadramento) {
+void CamadaFisicaTransmissora(const vector<int>& quadro, int codificacaoFisica,
+                              int tipoDeEnquadramento) {
   vector<int> fluxoBrutoDeBits;
   vector<int> bits = TransformaASCIIEmBits(quadro);
   switch (codificacaoFisica) {
@@ -29,7 +29,8 @@ void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits,
   for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
     fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
   }
-  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, codificacaoFisica, tipoDeEnquadramento);
+  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, codificacaoFisica,
+                        tipoDeEnquadramento);
 }
 
 void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
@@ -52,7 +53,6 @@ void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
   }
   quadroEnquadrado = TransformaBitsEmASCII(quadro);
   CamadaEnlaceReceptora(quadroEnquadrado, tipoDeEnquadramento);
-  //CamadaDeAplicacaoReceptora(quadro);
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {
@@ -157,8 +157,8 @@ vector<int> TransformaBitsEmASCII(vector<int> bits) {
       quadro.push_back(intChar);  // Adiciona cada letra
       intChar = 0;
     }
-    intChar = intChar << 1;   // Forma cada letra
-    intChar += bits.at(i);  // adicionando o int e shiftando para esquerda
+    intChar = intChar << 1;  // Forma cada letra
+    intChar += bits.at(i);   // adicionando o int e shiftando para esquerda
   }
   quadro.push_back(intChar);  // Adiciona última letra (ficou pra trás)
   return quadro;
