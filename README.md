@@ -47,19 +47,19 @@ Essa camada é encarregada de carregar bits brutos que foram processados várias
 
 #### Codificação Binária
 
-Codificação que simplesmente carrega o fluxo bruto de bits exatamente como recebido:
-``010011`` -> sinal recebido
-``010011`` -> sinal enviado
+Codificação que simplesmente carrega o fluxo bruto de bits exatamente como recebido:  
+``010011`` -> sinal recebido  
+``010011`` -> sinal enviado  
 
 #### Codificação Manchester
 
-Codificação que aumenta a banda de sinal dos bits fazendo uma XOR do sinal com um clock de frequência igual ao período de um único bit:
-``` 0 1 0 0 1 1``` -> sinal recebido
- ```010101010101``` -> clock
- ```011001011010``` -> sinal enviado
+Codificação que aumenta a banda de sinal dos bits fazendo uma XOR do sinal com um clock de frequência igual ao período de um único bit:  
+``` 0 1 0 0 1 1``` -> sinal recebido  
+ ```010101010101``` -> clock  
+ ```011001011010``` -> sinal enviado  
 
 #### Codificação Bipolar
 
-Codificação que aumenta a amplitude do sinal original dos bits alternando os bits ```1``` entre ```1``` e ```-1```:
-```  0  1  0  0  1  1``` -> sinal recebido
- ```  0  1  0  0 -1  1``` -> sinal enviado
+Codificação que aumenta a amplitude do sinal original dos bits alternando os bits ```1``` entre ```1``` e ```-1```:  
+```  0  1  0  0  1  1``` -> sinal recebido  
+ ```  0  1  0  0 -1  1``` -> sinal enviado  
