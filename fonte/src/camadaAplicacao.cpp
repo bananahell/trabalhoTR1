@@ -2,9 +2,6 @@
 
 void AplicacaoTransmissora() {
   string mensagem;
-  int codificacaoFisica = 0;
-  int tipoDeEnquadramento = 0;
-  int tipoDeErro = 0;
   cout << endl << "Digite uma mensagem: ";
   getline(cin, mensagem);
   cout << endl
