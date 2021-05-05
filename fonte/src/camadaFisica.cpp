@@ -1,7 +1,6 @@
 #include "camadaFisica.h"
 
-void CamadaFisicaTransmissora(const vector<int>& quadro, int codificacaoFisica,
-                              int tipoDeEnquadramento) {
+void CamadaFisicaTransmissora(const vector<int>& quadro) {
   vector<int> fluxoBrutoDeBits;
   switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
@@ -17,23 +16,20 @@ void CamadaFisicaTransmissora(const vector<int>& quadro, int codificacaoFisica,
       cout << "Tipo de codificação não reconhecido..." << endl;
       break;
   }
-  MeioDeComunicacao(fluxoBrutoDeBits, codificacaoFisica, tipoDeEnquadramento);
+  MeioDeComunicacao(fluxoBrutoDeBits);
 }
 
-void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits,
-                       int codificacaoFisica, int tipoDeEnquadramento) {
+void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits) {
   vector<int> fluxoBrutoDeBitsPontoA;
   vector<int> fluxoBrutoDeBitsPontoB;
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
   for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
     fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
   }
-  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB, codificacaoFisica,
-                        tipoDeEnquadramento);
+  CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
-void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
-                           int codificacaoFisica, int tipoDeEnquadramento) {
+void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits) {
   vector<int> quadro;
   switch (codificacaoFisica) {
     case CODIFICACAO_BINARIA:
@@ -49,7 +45,7 @@ void CamadaFisicaReceptora(const vector<int>& fluxoBrutoDeBits,
       cout << "Tipo de decodificação não reconhecido..." << endl;
       break;
   }
-  CamadaEnlaceReceptora(quadro, tipoDeEnquadramento);
+  CamadaEnlaceReceptora(quadro);
 }
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria(vector<int> quadro) {

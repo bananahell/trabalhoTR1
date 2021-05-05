@@ -1,17 +1,13 @@
 #include "camadaEnlace.h"
 
-void CamadaEnlaceTransmissora(const vector<int>& quadro, int codificacaoFisica,
-                              int tipoDeEnquadramento) {
-  vector<int> quadroEnquadrado =
-      CamadaEnlaceTransmissoraEnquadramento(quadro, tipoDeEnquadramento);
+void CamadaEnlaceTransmissora(const vector<int>& quadro) {
+  vector<int> quadroEnquadrado = CamadaEnlaceTransmissoraEnquadramento(quadro);
   quadroEnquadrado = TransformaASCIIEmBits(quadroEnquadrado);
   quadroEnquadrado = CamadaEnlaceTransmissoraControleDeErro(quadroEnquadrado);
-  CamadaFisicaTransmissora(quadroEnquadrado, codificacaoFisica,
-                           tipoDeEnquadramento);
+  CamadaFisicaTransmissora(quadroEnquadrado);
 }
 
-vector<int> CamadaEnlaceTransmissoraEnquadramento(const vector<int>& quadro,
-                                                  int tipoDeEnquadramento) {
+vector<int> CamadaEnlaceTransmissoraEnquadramento(const vector<int>& quadro) {
   vector<int> quadroEnquadrado;
   switch (tipoDeEnquadramento) {
     case CONTAGEM_DE_CHAR:
@@ -29,17 +25,15 @@ vector<int> CamadaEnlaceTransmissoraEnquadramento(const vector<int>& quadro,
   return quadroEnquadrado;
 }
 
-void CamadaEnlaceReceptora(vector<int>& quadroEnquadrado,
-                           int tipoDeEnquadramento) {
+void CamadaEnlaceReceptora(vector<int>& quadroEnquadrado) {
   quadroEnquadrado = CamadaEnlaceReceptoraControleDeErro(quadroEnquadrado);
   quadroEnquadrado = TransformaBitsEmASCII(quadroEnquadrado);
-  vector<int> quadro =
-      CamadaEnlaceReceptoraEnquadramento(quadroEnquadrado, tipoDeEnquadramento);
+  vector<int> quadro = CamadaEnlaceReceptoraEnquadramento(quadroEnquadrado);
   CamadaDeAplicacaoReceptora(quadro);
 }
 
 vector<int> CamadaEnlaceReceptoraEnquadramento(
-    const vector<int>& quadroEnquadrado, int tipoDeEnquadramento) {
+    const vector<int>& quadroEnquadrado) {
   vector<int> quadro;
 
   switch (tipoDeEnquadramento) {

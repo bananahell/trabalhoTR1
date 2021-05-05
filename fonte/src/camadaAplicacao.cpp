@@ -4,6 +4,7 @@ void AplicacaoTransmissora() {
   string mensagem;
   int codificacaoFisica = 0;
   int tipoDeEnquadramento = 0;
+  int tipoDeErro = 0;
   cout << endl << "Digite uma mensagem: ";
   getline(cin, mensagem);
   cout << endl
@@ -12,20 +13,31 @@ void AplicacaoTransmissora() {
        << "1: Inserção de Bytes" << endl;
   cin >> tipoDeEnquadramento;
   cout << endl
+       << "Selecione um tipo de erro (camada de enlace):" << endl
+       << "0: Bit de paridade par" << endl
+       << "1: CRC (Redundância Cíclica)" << endl;
+  cin >> tipoDeErro;
+  cout << endl
        << "Selecione um modo de codificação (camada física):" << endl
        << "0: Codificação Binária" << endl
        << "1: Codificação Manchester" << endl
        << "2: Codificação Bipolar" << endl;
   cin >> codificacaoFisica;
-  CamadaDeAplicacaoTransmissora(mensagem, codificacaoFisica,
-                                tipoDeEnquadramento);
+  CamadaDeAplicacaoTransmissora(mensagem);
 }
 
-void CamadaDeAplicacaoTransmissora(const string& mensagem,
-                                   int codificacaoFisica,
-                                   int tipoDeEnquadramento) {
+void CamadaDeAplicacaoTransmissora(const string& mensagem) {
   vector<int> quadro = TransformaStringEmASCII(mensagem);
-  CamadaEnlaceTransmissora(quadro, codificacaoFisica, tipoDeEnquadramento);
+  CamadaEnlaceTransmissora(quadro);
+}
+
+void CamadaDeAplicacaoReceptora(const vector<int>& quadro) {
+  string mensagem = TransformaASCIIEmString(quadro);
+  AplicacaoReceptora(mensagem);
+}
+
+void AplicacaoReceptora(const string& mensagem) {
+  cout << endl << "Mensagem recebida: " << mensagem << endl << endl;
 }
 
 vector<int> TransformaStringEmASCII(string mensagem) {
@@ -38,19 +50,10 @@ vector<int> TransformaStringEmASCII(string mensagem) {
   return quadro;
 }
 
-void CamadaDeAplicacaoReceptora(const vector<int>& quadro) {
-  string mensagem = TransformaASCIIEmString(quadro);
-  AplicacaoReceptora(mensagem);
-}
-
 string TransformaASCIIEmString(vector<int> quadro) {
   string mensagem = "";
   for (unsigned i = 0; i < quadro.size(); i++) {
     mensagem.append(1, char(quadro[i]));
   }
   return mensagem;
-}
-
-void AplicacaoReceptora(const string& mensagem) {
-  cout << endl << "Mensagem recebida: " << mensagem << endl << endl;
 }

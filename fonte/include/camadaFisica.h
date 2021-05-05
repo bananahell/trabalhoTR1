@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include "variaveisDeAcordo.h"
+
 using namespace std;
 
 const int ASCII_MAX_BITS = 8;
@@ -11,13 +13,17 @@ const int CODIFICACAO_MANCHESTER = 1;
 const int CODIFICACAO_BIPOLAR = 2;
 const vector<int> CLOCK_MANCHESTER{0, 1};
 
+extern int codificacaoFisica;
+extern int tipoDeEnquadramento;
+extern int tipoDeErro;
+
 /**
  * Entrada na camada física para transmissão.
  * @param fluxoBrutoDeBits Bits que vão viajar pelos sinais via cabo ou onda.
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaTransmissora(const vector<int>&, int, int);
+void CamadaFisicaTransmissora(const vector<int>&);
 
 /**
  * "Simulação" do meio de comunicação, transmitindo os bits.
@@ -25,7 +31,7 @@ void CamadaFisicaTransmissora(const vector<int>&, int, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void MeioDeComunicacao(const vector<int>&, int, int);
+void MeioDeComunicacao(const vector<int>&);
 
 /**
  * Entrada na camada física para recepção.
@@ -33,7 +39,7 @@ void MeioDeComunicacao(const vector<int>&, int, int);
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaFisicaReceptora(const vector<int>&, int, int);
+void CamadaFisicaReceptora(const vector<int>&);
 
 /**
  * Ou conhecida como NRZ, simplesmente replica a sequência de bits recebida.
@@ -87,4 +93,4 @@ vector<int> CamadaFisicaReceptoraCodificacaoBipolar(vector<int>);
  * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceReceptora(vector<int>&, int);
+void CamadaEnlaceReceptora(vector<int>&);

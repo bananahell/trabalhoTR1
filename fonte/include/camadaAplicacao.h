@@ -1,5 +1,9 @@
 #include "camadaEnlace.h"
 
+extern int codificacaoFisica;
+extern int tipoDeEnquadramento;
+extern int tipoDeErro;
+
 /**
  * Entrada na camada de aplicação para transmissão.
  */
@@ -11,7 +15,19 @@ void AplicacaoTransmissora();
  * @param codificacaoFisica Codificação escolhida, entre Binária, Bipolar e
  * Manchester.
  */
-void CamadaDeAplicacaoTransmissora(const string&, int, int);
+void CamadaDeAplicacaoTransmissora(const string&);
+
+/**
+ * Entrada na camada de aplicação para recepção.
+ * @param quadro Um vetor com os bits em binário da string em ASCII.
+ */
+void CamadaDeAplicacaoReceptora(const vector<int>&);
+
+/**
+ * Entrada na camada de aplicação para recepção.
+ * @param mensagem String resultado da decodificação.
+ */
+void AplicacaoReceptora(const string&);
 
 /**
  * Recebe string e retorna um vetor de inteiros dos valores binários em ASCII de
@@ -29,18 +45,6 @@ vector<int> TransformaStringEmASCII(string);
 string TransformaASCIIEmString(vector<int>);
 
 /**
- * Entrada na camada de aplicação para recepção.
- * @param quadro Um vetor com os bits em binário da string em ASCII.
- */
-void CamadaDeAplicacaoReceptora(const vector<int>&);
-
-/**
- * Entrada na camada de aplicação para recepção.
- * @param mensagem String resultado da decodificação.
- */
-void AplicacaoReceptora(const string&);
-
-/**
  * Entrada na camada de enlace para transmissão.
  * São realizados o Enquadramento, o Controle de Erros, e o envio à Camada
  * Física.
@@ -48,4 +52,4 @@ void AplicacaoReceptora(const string&);
  * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceTransmissora(const vector<int>&, int, int);
+void CamadaEnlaceTransmissora(const vector<int>&);
