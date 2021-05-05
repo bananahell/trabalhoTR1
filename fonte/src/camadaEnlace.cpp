@@ -4,7 +4,8 @@ void CamadaEnlaceTransmissora(const vector<int>& quadro, int codificacaoFisica,
                               int tipoDeEnquadramento) {
   vector<int> quadroEnquadrado =
       CamadaEnlaceTransmissoraEnquadramento(quadro, tipoDeEnquadramento);
-  // CamadaEnlaceTransmissoraControleDeErro(quadroEnquadrado);
+  quadroEnquadrado = TransformaASCIIEmBits(quadroEnquadrado);
+  quadroEnquadrado = CamadaEnlaceTransmissoraControleDeErro(quadroEnquadrado);
   CamadaFisicaTransmissora(quadroEnquadrado, codificacaoFisica,
                            tipoDeEnquadramento);
 }
@@ -26,6 +27,43 @@ vector<int> CamadaEnlaceTransmissoraEnquadramento(const vector<int>& quadro,
       break;
   }
   return quadroEnquadrado;
+}
+
+void CamadaEnlaceReceptora(vector<int>& quadroEnquadrado,
+                           int tipoDeEnquadramento) {
+  quadroEnquadrado = CamadaEnlaceReceptoraControleDeErro(quadroEnquadrado);
+  quadroEnquadrado = TransformaBitsEmASCII(quadroEnquadrado);
+  vector<int> quadro =
+      CamadaEnlaceReceptoraEnquadramento(quadroEnquadrado, tipoDeEnquadramento);
+  CamadaDeAplicacaoReceptora(quadro);
+}
+
+vector<int> CamadaEnlaceReceptoraEnquadramento(
+    const vector<int>& quadroEnquadrado, int tipoDeEnquadramento) {
+  vector<int> quadro;
+
+  switch (tipoDeEnquadramento) {
+    case CONTAGEM_DE_CHAR:
+      quadro = CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
+          quadroEnquadrado);
+      break;
+    case INSERCAO_DE_BYTE:
+      quadro =
+          CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(quadroEnquadrado);
+      break;
+    default:
+      cout << "Tipo de desenquadramento não reconhecido..." << endl;
+      break;
+  }
+  return quadro;
+}
+
+vector<int> CamadaEnlaceTransmissoraControleDeErro(const vector<int>& quadro) {
+  return quadro;
+}
+
+vector<int> CamadaEnlaceReceptoraControleDeErro(const vector<int>& quadro) {
+  return quadro;
 }
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
@@ -112,36 +150,6 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
   return quadroEnquadrado;
 }
 
-void CamadaEnlaceTransmissoraControleDeErro(const vector<int>& quadro) {}
-
-void CamadaEnlaceReceptora(const vector<int>& quadroEnquadrado,
-                           int tipoDeEnquadramento) {
-  vector<int> quadro =
-      CamadaEnlaceReceptoraEnquadramento(quadroEnquadrado, tipoDeEnquadramento);
-  // CamadaEnlaceReceptoraControleDeErro(quadro);
-  CamadaDeAplicacaoReceptora(quadro);
-}
-
-vector<int> CamadaEnlaceReceptoraEnquadramento(
-    const vector<int>& quadroEnquadrado, int tipoDeEnquadramento) {
-  vector<int> quadro;
-
-  switch (tipoDeEnquadramento) {
-    case CONTAGEM_DE_CHAR:
-      quadro = CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
-          quadroEnquadrado);
-      break;
-    case INSERCAO_DE_BYTE:
-      quadro =
-          CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(quadroEnquadrado);
-      break;
-    default:
-      cout << "Tipo de desenquadramento não reconhecido..." << endl;
-      break;
-  }
-  return quadro;
-}
-
 vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(
     vector<int> quadroEnquadrado) {
   vector<int> quadro;
@@ -188,4 +196,37 @@ vector<int> CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(
   return quadro;
 }
 
-void CamadaEnlaceReceptoraControleDeErro(const vector<int>& quadro) {}
+vector<int> TransformaASCIIEmBits(vector<int> quadro) {
+  vector<int> bits;
+  for (unsigned i = 0; i < quadro.size(); i++) {  // Pega mensagem inteira
+    vector<int> tempQuadro;
+    int charBinario = quadro.at(i);
+    for (unsigned j = 0; j < ASCII_MAX_BITS; j++) {  // 8 bits por letra
+      if (charBinario % 2 == 0) {
+        tempQuadro.push_back(0);
+      } else {
+        tempQuadro.push_back(1);
+      }
+      charBinario = charBinario >> 1;
+    }
+    for (int k = ASCII_MAX_BITS - 1; k >= 0; k--) {
+      bits.push_back(tempQuadro.at(k));
+    }
+  }
+  return bits;
+}
+
+vector<int> TransformaBitsEmASCII(vector<int> bits) {
+  vector<int> quadro;
+  int intChar = 0;
+  for (unsigned i = 0; i < bits.size(); i++) {  // Pega mensagem inteira
+    if (i != 0 && i % ASCII_MAX_BITS == 0) {
+      quadro.push_back(intChar);  // Adiciona cada letra
+      intChar = 0;
+    }
+    intChar = intChar << 1;  // Forma cada letra
+    intChar += bits.at(i);   // adicionando o int e shiftando para esquerda
+  }
+  quadro.push_back(intChar);  // Adiciona última letra (ficou pra trás)
+  return quadro;
+}

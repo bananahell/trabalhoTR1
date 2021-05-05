@@ -39,7 +39,7 @@ vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
 vector<int> CamadaEnlaceTransmissoraEnquadramentoInsercaoDeBytes(
     const vector<int>&);
 
-void CamadaEnlaceTransmissoraControleDeErro(const vector<int>&);
+vector<int> CamadaEnlaceTransmissoraControleDeErro(const vector<int>&);
 
 /**
  * Entrada na camada de enlace para recepção.
@@ -47,7 +47,7 @@ void CamadaEnlaceTransmissoraControleDeErro(const vector<int>&);
  * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceReceptora(const vector<int>&, int);
+void CamadaEnlaceReceptora(vector<int>&, int);
 
 vector<int> CamadaEnlaceReceptoraEnquadramento(const vector<int>&, int);
 
@@ -56,10 +56,14 @@ vector<int> CamadaEnlaceReceptoraEnquadramentoContagemDeCaracteres(vector<int>);
 vector<int> CamadaEnlaceReceptoraEnquadramentoInsercaoDeBytes(
     const vector<int>&);
 
-void CamadaEnlaceReceptoraControleDeErro(const vector<int>&);
+vector<int> CamadaEnlaceReceptoraControleDeErro(const vector<int>&);
 
 /**
  * Entrada na camada de aplicação para recepção.
  * @param quadro Um vetor com os bits em binário da string em ASCII.
  */
 void CamadaDeAplicacaoReceptora(const vector<int>&);
+
+vector<int> TransformaASCIIEmBits(vector<int>);
+
+vector<int> TransformaBitsEmASCII(vector<int>);

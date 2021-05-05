@@ -87,8 +87,4 @@ vector<int> CamadaFisicaReceptoraCodificacaoBipolar(vector<int>);
  * @param tipoDeEnquadramento Protocolo de enquadramento escolhido, entre
  * Contagem de Caracteres ou Inserção de Bytes.
  */
-void CamadaEnlaceReceptora(const vector<int>&, int);
-
-vector<int> TransformaASCIIEmBits(vector<int>);
-
-vector<int> TransformaBitsEmASCII(vector<int>);
+void CamadaEnlaceReceptora(vector<int>&, int);
