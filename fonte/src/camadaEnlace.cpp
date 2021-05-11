@@ -141,68 +141,24 @@ vector<int> CamadaEnlaceReceptoraControleDeErroBitParidade(
   return quadroChecado;
 }
 
-vector<int> CamadaEnlaceReceptoraControleDeErroCRC(vector<int>& quadro) {
-  vector<int> quadroOriginal;
+vector<int> CamadaEnlaceReceptoraControleDeErroCRC(const vector<int>& quadro) {
   vector<int> quadroChecado = quadro;
-  vector<int> crcAchado;
   vector<int> resultadoDivisao;
-  int quadroChecSize;
-  bool carry = false;
-  for (unsigned i = 0; i < GERADOR_CRC.size() - 1; i++) {
-    crcAchado.push_back(quadro.at(quadro.size() - GERADOR_CRC.size() + 1 + i));
-  }
-  for (unsigned i = 0; i < crcAchado.size(); i++) {
-    quadroChecado.pop_back();
-  }
-  quadroOriginal = quadroChecado;
-  quadroChecSize = quadroChecado.size() - 1;
-  for (unsigned i = 0; i < crcAchado.size(); i++) {
-    if (quadroChecado.at(quadroChecSize - i) == 0 ||
-        crcAchado.at(crcAchado.size() - 1 - i) == 0) {
-      if (quadroChecado.at(quadroChecSize - i) == 1 ||
-          crcAchado.at(crcAchado.size() - 1 - i) == 1) {
-        if (carry) {
-          quadroChecado.at(quadroChecSize - i) = 0;
-          carry = true;
-        } else {
-          quadroChecado.at(quadroChecSize - i) = 1;
-          carry = false;
-        }
-      } else {
-        if (carry) {
-          quadroChecado.at(quadroChecSize - i) = 1;
-        } else {
-          quadroChecado.at(quadroChecSize - i) = 0;
-        }
-        carry = false;
-      }
-    } else {
-      if (carry) {
-        quadroChecado.at(quadroChecSize - i) = 1;
-      } else {
-        quadroChecado.at(quadroChecSize - i) = 0;
-      }
-      carry = true;
-    }
-    unsigned j = i;
-    if (i == crcAchado.size() - 2 && carry) {
-      while (quadroChecado.at(quadroChecado.size() - 2 - j) == 1 &&
-             j < quadroChecado.size()) {
-        quadroChecado.at(quadroChecado.size() - 2 - j) = 0;
-        j++;
-      }
-      carry = false;
-    }
-  }
+
   resultadoDivisao = DivideVetoresDeIntPorGerador(quadroChecado);
+
   for (unsigned i = 0; i < resultadoDivisao.size(); i++) {
     if (resultadoDivisao.at(i) == 1) {
-      quadroOriginal.clear();
-      quadroOriginal.push_back(0);
-      return quadroOriginal;
+      quadroChecado.clear();
+      quadroChecado.push_back(0);
+      return quadroChecado;
     }
   }
-  return quadroOriginal;
+
+  for (unsigned i = 0; i < GERADOR_CRC.size() - 1; i++) {
+    quadroChecado.pop_back();
+  }
+  return quadroChecado;
 }
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
@@ -374,13 +330,16 @@ vector<int> DivideVetoresDeIntPorGerador(vector<int>& bits) {
   vector<int> crcAchado;
   for (unsigned i = 0; i < bits.size() - GERADOR_CRC.size() + 1; i++) {
     if (bits.at(i) == 1) {
-      for (unsigned j = 1; j < GERADOR_CRC.size(); j++) {
+      for (unsigned j = 0; j < GERADOR_CRC.size(); j++) {
         bits.at(i + j) = bits.at(i + j) ^ GERADOR_CRC.at(j);
       }
     }
   }
+  cout << "na divisao, crcAchado = ";
   for (unsigned i = 0; i < GERADOR_CRC.size() - 1; i++) {
     crcAchado.push_back(bits.at(bits.size() - GERADOR_CRC.size() + 1 + i));
+    cout << crcAchado.at(i);
   }
+  cout << endl;
   return crcAchado;
 }

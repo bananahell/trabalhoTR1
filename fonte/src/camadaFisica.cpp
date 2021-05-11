@@ -22,9 +22,16 @@ void CamadaFisicaTransmissora(const vector<int>& quadro) {
 void MeioDeComunicacao(const vector<int>& fluxoBrutoDeBits) {
   vector<int> fluxoBrutoDeBitsPontoA;
   vector<int> fluxoBrutoDeBitsPontoB;
+  srand(time(NULL));
+
   fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
   for (unsigned i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++) {
-    fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
+    bool erro = probDeErro > rand() % 100;
+    if (erro) {
+      fluxoBrutoDeBitsPontoB.push_back(!fluxoBrutoDeBitsPontoA.at(i));
+    } else {
+      fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA.at(i));
+    }
   }
   CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }

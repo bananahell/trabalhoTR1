@@ -15,6 +15,11 @@ void AplicacaoTransmissora() {
        << "1: CRC (Redundância Cíclica)" << endl;
   cin >> tipoDeErro;
   cout << endl
+       << "Selecione uma probabilidade de erro de 0 a 100 por bit (camada de "
+          "enlace):"
+       << endl;
+  cin >> probDeErro;
+  cout << endl
        << "Selecione um modo de codificação (camada física):" << endl
        << "0: Codificação Binária" << endl
        << "1: Codificação Manchester" << endl

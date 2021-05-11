@@ -11,7 +11,8 @@ const int FLAG = int('a');  // Usamos caracteres muito usados para
 const int ESC = int('b');   // testar se o programa funciona bem
 
 const int NUM_COL = 8;
-const vector<int> GERADOR_CRC{1, 0, 0, 1};
+const vector<int> GERADOR_CRC{1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+                              0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1};
 
 extern int codificacaoFisica;
 extern int tipoDeEnquadramento;
@@ -72,7 +73,7 @@ vector<int> CamadaEnlaceReceptoraControleDeErroBitParidade(vector<int>&);
 
 vector<int> CamadaEnlaceTransmissoraControleDeErroCRC(vector<int>&);
 
-vector<int> CamadaEnlaceReceptoraControleDeErroCRC(vector<int>&);
+vector<int> CamadaEnlaceReceptoraControleDeErroCRC(const vector<int>&);
 
 vector<int> TransformaASCIIEmBits(vector<int>);
 
