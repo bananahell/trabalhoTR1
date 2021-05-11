@@ -5,6 +5,7 @@ const int INSERCAO_DE_BYTE = 1;
 
 const int BIT_PARIDADE_PAR = 0;
 const int CRC = 1;
+const int HAMMING = 2;
 
 const int CONTAGEM_HEADER = 4;
 const int FLAG = int('a');  // Usamos caracteres muito usados para
@@ -13,6 +14,8 @@ const int ESC = int('b');   // testar se o programa funciona bem
 const int NUM_COL = 8;
 const vector<int> GERADOR_CRC{1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
                               0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1};
+
+const int HAMMING_BITS_DADOS = 8;
 
 extern int codificacaoFisica;
 extern int tipoDeEnquadramento;
@@ -74,6 +77,10 @@ vector<int> CamadaEnlaceReceptoraControleDeErroBitParidade(vector<int>&);
 vector<int> CamadaEnlaceTransmissoraControleDeErroCRC(vector<int>&);
 
 vector<int> CamadaEnlaceReceptoraControleDeErroCRC(const vector<int>&);
+
+vector<int> CamadaEnlaceTransmissoraControleDeErroHamming(vector<int>&);
+
+vector<int> CamadaEnlaceReceptoraControleDeErroHamming(vector<int>&);
 
 vector<int> TransformaASCIIEmBits(vector<int>);
 

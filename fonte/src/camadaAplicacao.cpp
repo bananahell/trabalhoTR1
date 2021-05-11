@@ -12,7 +12,8 @@ void AplicacaoTransmissora() {
   cout << endl
        << "Selecione um tipo de erro (camada de enlace):" << endl
        << "0: Bit de paridade par" << endl
-       << "1: CRC (Redundância Cíclica)" << endl;
+       << "1: CRC (Redundância Cíclica)" << endl
+       << "2: Código de Hamming" << endl;
   cin >> tipoDeErro;
   cout << endl
        << "Selecione uma probabilidade de erro de 0 a 100 por bit (camada de "

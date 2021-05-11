@@ -66,6 +66,9 @@ vector<int> CamadaEnlaceTransmissoraControleDeErro(vector<int>& quadro) {
     case CRC:
       quadroControlado = CamadaEnlaceTransmissoraControleDeErroCRC(quadro);
       break;
+    case HAMMING:
+      quadroControlado = CamadaEnlaceTransmissoraControleDeErroHamming(quadro);
+      break;
     default:
       cout << "Tipo de erro não reconhecido..." << endl;
       break;
@@ -82,6 +85,9 @@ vector<int> CamadaEnlaceReceptoraControleDeErro(vector<int>& quadro) {
       break;
     case CRC:
       quadroVerificado = CamadaEnlaceReceptoraControleDeErroCRC(quadro);
+      break;
+    case HAMMING:
+      quadroVerificado = CamadaEnlaceReceptoraControleDeErroHamming(quadro);
       break;
     default:
       cout << "Tipo de erro não reconhecido..." << endl;
@@ -114,6 +120,117 @@ vector<int> CamadaEnlaceTransmissoraControleDeErroCRC(vector<int>& quadro) {
   vector<int> crcAchado = DivideVetoresDeIntPorGerador(quadro);
   for (unsigned i = 0; i < crcAchado.size(); i++) {
     quadroChecado.push_back(crcAchado.at(i));
+  }
+  return quadroChecado;
+}
+
+vector<int> CamadaEnlaceTransmissoraControleDeErroHamming(
+    vector<int>& quadro) {
+  vector<int> quadroChecado;
+  vector<int> buffer;
+  int i;
+  int j;
+  int k;
+  int index_paridade;
+  int paridade;
+
+  for (i = 0; i < quadro.size(); i += HAMMING_BITS_DADOS) {
+    buffer.clear();
+    j = i;
+    k = 0;
+    index_paridade = 1;
+    while (j < i + HAMMING_BITS_DADOS) { //insere os bits de mensagem e os bits de verificação no buffer
+      if (k == (index_paridade - 1)) {
+        buffer.push_back(0);
+        index_paridade = index_paridade << 1;
+        k++;
+      }
+      else {
+        buffer.push_back(quadro.at(j));
+        j++;
+        k++;
+      }
+    }
+    
+    index_paridade = 1;
+    paridade = 0;
+    for (j = 0; j < buffer.size(); j++) { //calcula os bits de verificação pelo método XOR
+      if (j == index_paridade - 1) {
+        index_paridade = index_paridade << 1;
+        j++;
+      }
+      else if (buffer.at(j) == 1) {
+        paridade = paridade ^ (j + 1);
+      }
+    }
+
+    index_paridade = 1;
+    for (j = 0; j < buffer.size(); j++) { //insere os bits de verificação e a mensagem no quadro de saída
+      if (j == index_paridade - 1) {
+        if (paridade % 2) {
+          quadroChecado.push_back(1);
+        }
+        else {
+          quadroChecado.push_back(0);
+        }
+        paridade = paridade >> 1;
+        index_paridade = index_paridade << 1;
+        j++;
+      }
+      else {
+        quadroChecado.push_back(buffer.at(j));
+      }
+    }
+  }
+  return quadroChecado;
+}
+
+vector<int> CamadaEnlaceReceptoraControleDeErroHamming(
+    vector<int>& quadro) {
+  vector<int> quadroChecado;
+  vector<int> buffer;
+  int i = HAMMING_BITS_DADOS;
+  int j;
+  int index_paridade;
+  int paridade;
+  int bits_paridade = 0;
+
+  while(i != 0) { //calcula o número de bits de verificação
+    i = i >> 1;
+    bits_paridade++;
+  }
+  for (i = 0; i < quadro.size(); i += HAMMING_BITS_DADOS + bits_paridade) {
+    buffer.clear();
+    j = i;
+    while (j < i + HAMMING_BITS_DADOS + bits_paridade) { //preenche o buffer com a mensagem
+      buffer.push_back(quadro.at(j));
+      j++;
+    }
+
+    paridade = 0;
+    for (j = 0; j < buffer.size(); j++) { //verifica a paridade para verificar se há erro
+      if (buffer.at(j) == 1) {
+        paridade = paridade ^ (j + 1);
+      }
+    }
+    if (paridade) {
+      cout << "Verificacao por Codigo de Hamming: Erro" << endl;
+    }
+    else {
+      cout << "Verificacao por Codigo de Hamming: Sem erro" << endl;
+    }
+
+    index_paridade = 1;
+    for (j = 0; j < buffer.size(); j++) { //Insere os bits de dados no quadro de saída
+      if (j == index_paridade - 1) {
+        index_paridade = index_paridade << 1;
+        j++;
+      }
+      else {
+        quadroChecado.push_back(buffer.at(j));
+        j++;
+      }
+    }
   }
   return quadroChecado;
 }
