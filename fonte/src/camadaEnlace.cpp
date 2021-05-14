@@ -117,9 +117,17 @@ vector<int> CamadaEnlaceTransmissoraControleDeErroBitParidade(
 
 vector<int> CamadaEnlaceTransmissoraControleDeErroCRC(vector<int>& quadro) {
   vector<int> quadroChecado = quadro;
-  vector<int> crcAchado = DivideVetoresDeIntPorGerador(quadro);
+  vector<int> quadroChecado1;
+
+  for (unsigned i = 0; i < GERADOR_CRC.size()-1; i++) {
+    quadroChecado.push_back(0);
+  }
+ 
+  quadroChecado1=quadroChecado;
+  vector<int> crcAchado = DivideVetoresDeIntPorGerador(quadroChecado1);
+
   for (unsigned i = 0; i < crcAchado.size(); i++) {
-    quadroChecado.push_back(crcAchado.at(i));
+    quadroChecado.at(quadroChecado.size()-1-i)=crcAchado.at(crcAchado.size()-1-i);
   }
   return quadroChecado;
 }
@@ -272,7 +280,7 @@ vector<int> CamadaEnlaceReceptoraControleDeErroBitParidade(
 vector<int> CamadaEnlaceReceptoraControleDeErroCRC(const vector<int>& quadro) {
   vector<int> quadroChecado = quadro;
   vector<int> resultadoDivisao;
-
+  vector<int> quadro1 = quadro;
   resultadoDivisao = DivideVetoresDeIntPorGerador(quadroChecado);
 
   for (unsigned i = 0; i < resultadoDivisao.size(); i++) {
@@ -284,9 +292,9 @@ vector<int> CamadaEnlaceReceptoraControleDeErroCRC(const vector<int>& quadro) {
   }
 
   for (unsigned i = 0; i < GERADOR_CRC.size() - 1; i++) {
-    quadroChecado.pop_back();
+    quadro1.pop_back();
   }
-  return quadroChecado;
+  return quadro1;
 }
 
 vector<int> CamadaEnlaceTransmissoraEnquadramentoContagemDeCaracteres(
