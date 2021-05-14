@@ -134,6 +134,7 @@ vector<int> CamadaEnlaceTransmissoraControleDeErroHamming(
   int index_paridade;
   int paridade;
 
+  cout << endl << "Codigo de Hamming enviado: " << endl;
   for (i = 0; i < quadro.size(); i += HAMMING_BITS_DADOS) {
     buffer.clear();
     j = i;
@@ -155,7 +156,7 @@ vector<int> CamadaEnlaceTransmissoraControleDeErroHamming(
     index_paridade = 1;
     paridade = 0;
     for (j = 0; j < buffer.size(); j++) { //calcula os bits de verificação pelo método XOR
-      if (j == index_paridade - 1) {
+      if (j == (index_paridade - 1)) {
         index_paridade = index_paridade << 1;
         j++;
       }
@@ -165,22 +166,26 @@ vector<int> CamadaEnlaceTransmissoraControleDeErroHamming(
     }
 
     index_paridade = 1;
+    cout << "[" << (i/HAMMING_BITS_DADOS) + 1 << "]: ";
     for (j = 0; j < buffer.size(); j++) { //insere os bits de verificação e a mensagem no quadro de saída
-      if (j == index_paridade - 1) {
+      if (j == (index_paridade - 1)) {
         if (paridade % 2) {
           quadroChecado.push_back(1);
+          cout << 1;
         }
         else {
           quadroChecado.push_back(0);
+          cout << 0;
         }
         paridade = paridade >> 1;
         index_paridade = index_paridade << 1;
-        j++;
       }
       else {
         quadroChecado.push_back(buffer.at(j));
+          cout << buffer.at(j);
       }
     }
+    cout << endl;
   }
   return quadroChecado;
 }
@@ -199,6 +204,7 @@ vector<int> CamadaEnlaceReceptoraControleDeErroHamming(
     i = i >> 1;
     bits_paridade++;
   }
+  cout << endl << "Codigo de Hamming recebido: " << endl;
   for (i = 0; i < quadro.size(); i += HAMMING_BITS_DADOS + bits_paridade) {
     buffer.clear();
     j = i;
@@ -206,29 +212,34 @@ vector<int> CamadaEnlaceReceptoraControleDeErroHamming(
       buffer.push_back(quadro.at(j));
       j++;
     }
-
+    cout << "[" << (i/(HAMMING_BITS_DADOS + bits_paridade)) + 1 << "]: ";
     paridade = 0;
     for (j = 0; j < buffer.size(); j++) { //verifica a paridade para verificar se há erro
       if (buffer.at(j) == 1) {
         paridade = paridade ^ (j + 1);
       }
+      cout << buffer.at(j);
     }
     if (paridade) {
-      cout << "Verificacao por Codigo de Hamming: Erro" << endl;
+      cout << " - ERRO - bit " << paridade << " corrigido " << endl;
+      if (buffer.at(paridade - 1)) {
+        buffer.at(paridade - 1) = 0;
+      }
+      else {
+        buffer.at(paridade - 1) = 1;
+      }
     }
     else {
-      cout << "Verificacao por Codigo de Hamming: Sem erro" << endl;
+      cout << " - OK" << endl;
     }
 
     index_paridade = 1;
     for (j = 0; j < buffer.size(); j++) { //Insere os bits de dados no quadro de saída
-      if (j == index_paridade - 1) {
+      if (j == (index_paridade - 1)) {
         index_paridade = index_paridade << 1;
-        j++;
       }
       else {
         quadroChecado.push_back(buffer.at(j));
-        j++;
       }
     }
   }
