@@ -1,8 +1,8 @@
 # Trabalho de TR1
 
-Trabalho da matéria de Teleinformática e Redes
-14/0065032 - Pedro Nogueira
-UnB - 2020/2
+Trabalho da matéria de Teleinformática e Redes 1  
+14/0065032 - Pedro Nogueira  
+UnB - 2020/2  
 
 ## Especificações
 
